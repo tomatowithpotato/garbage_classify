@@ -26,7 +26,7 @@ def sample(all_data, splt_rate):
 
 
 def create_train_validation():
-    dir = r'info\image_label.txt'
+    dir = 'info/image_label.txt'
     
     with open(dir, 'r', encoding='utf-8') as f:
         image_label = json.load(f)
@@ -59,9 +59,9 @@ def create_train_validation():
             validationset[v] = key
     
     print(len(trainset) + len(validationset))
-    with open(r'info\train\train_data.txt', 'w', encoding='utf-8') as f:
+    with open('info/train/train_data.txt', 'w', encoding='utf-8') as f:
         json.dump(trainset, f, indent=4, ensure_ascii=False)
-    with open(r'info\validation\validation_data.txt', 'w', encoding='utf-8') as f:
+    with open('info/validation/validation_data.txt', 'w', encoding='utf-8') as f:
         json.dump(validationset, f, indent=4, ensure_ascii=False)
     print('good man!!!')
 

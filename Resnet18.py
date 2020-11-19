@@ -104,4 +104,4 @@ if __name__ == "__main__":
     model.fit(db_train, epochs=epochs, validation_data=db_val)
 
     #保存模型
-    tf.saved_model.save(model, r'model\Resnet.h5')
+    tf.saved_model.save(model, 'model/Resnet.h5')

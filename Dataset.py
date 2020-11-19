@@ -34,8 +34,8 @@ def get_dataset(numclasses, batch_size, dir, is_train=None):
     return dataset
 
 def get_Dataset(num_classes, batch_size):
-    train_dataset = get_dataset(num_classes, batch_size, r'info\train\train_data.txt', 'train')
-    validation_dataset = get_dataset(num_classes, batch_size, r'info\validation\validation_data.txt')
+    train_dataset = get_dataset(num_classes, batch_size, 'info/train/train_data.txt', 'train')
+    validation_dataset = get_dataset(num_classes, batch_size, 'info/validation/validation_data.txt')
     return train_dataset, validation_dataset
 
 if __name__ == "__main__": 

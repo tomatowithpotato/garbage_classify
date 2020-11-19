@@ -129,7 +129,7 @@ if __name__ == "__main__":
     model.fit(db_train, epochs=epochs, validation_data=db_val)
 
     #保存模型
-    tf.saved_model.save(model, r'model\Alexnet.h5')
+    tf.saved_model.save(model, 'model/Alexnet.h5')
 
     #11:06:54.404295
     #18:46:52.348865

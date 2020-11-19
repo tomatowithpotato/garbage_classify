@@ -35,14 +35,14 @@ def get_dataset_gen(num_classes, batch_size, dir, is_train=False):
     return dataset
 
 def get_DatasetGenerator(batch_size, num_classes):
-    train_dataset = get_dataset_gen(batch_size, num_classes, r'info\train\train_data.txt', True)
-    validation_dataset = get_dataset_gen(batch_size, num_classes, r'info\validation\validation_data.txt')
+    train_dataset = get_dataset_gen(batch_size, num_classes, 'info/train/train_data.txt', True)
+    validation_dataset = get_dataset_gen(batch_size, num_classes, 'info/validation/validation_data.txt')
     return train_dataset, validation_dataset
 
 if __name__ == "__main__":
     train_dataset, validation_dataset = get_DatasetGenerator(num_classes=40, batch_size=64)
     
-    with open(r'info\train\garbage_classify_rule.json', 'r', encoding='utf-8') as f:
+    with open('info/train/garbage_classify_rule.json', 'r', encoding='utf-8') as f:
         label_dict = json.load(f)
     for image, label in validation_dataset:
         #print(label_dict[str(label[0])])
