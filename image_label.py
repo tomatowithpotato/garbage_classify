@@ -19,7 +19,8 @@ def create_image_label(save_file, img_ROOT, labels_ROOT):
         json.dump(image_label, f, indent=4, ensure_ascii=False)
 
 if __name__ == "__main__":
-    img_ROOT = r'E:\学习资料\神圣罗马帝国\垃圾数据集\train_data\image'
-    labels_ROOT = r'E:\学习资料\神圣罗马帝国\垃圾数据集\train_data\label'
-    save_file = r'info\image_label.txt'
+    ROOT = 'E:/学习资料/神圣罗马帝国'
+    img_ROOT = ROOT + '/垃圾数据集/train_data/image'
+    labels_ROOT = ROOT + '/垃圾数据集/train_data/label'
+    save_file = 'info/image_label.txt'
     create_image_label(save_file, img_ROOT, labels_ROOT)
