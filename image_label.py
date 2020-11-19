@@ -20,7 +20,7 @@ def create_image_label(save_file, img_ROOT, labels_ROOT):
 
 if __name__ == "__main__":
     ROOT = 'E:/学习资料/神圣罗马帝国'
-    img_ROOT = ROOT + '/垃圾数据集/train_data/image'
-    labels_ROOT = ROOT + '/垃圾数据集/train_data/label'
+    img_ROOT = ROOT + '/garbage_data/train_data/image'
+    labels_ROOT = ROOT + '/garbage_data/train_data/label'
     save_file = 'info/image_label.txt'
     create_image_label(save_file, img_ROOT, labels_ROOT)
