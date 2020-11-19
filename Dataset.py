@@ -39,8 +39,8 @@ def get_Dataset(num_classes, batch_size):
     return train_dataset, validation_dataset
 
 if __name__ == "__main__": 
-    train_dataset = get_dataset(40, 64, r'info\train\train_data.txt')
-    validation_dataset = get_dataset(40, 64, r'info\validation\validation_data.txt')
+    train_dataset = get_dataset(40, 64, 'info/train/train_data.txt')
+    validation_dataset = get_dataset(40, 64, 'info/validation/validation_data.txt')
     '''
     print('Dataset.py')
     for image, label in validation_dataset:
