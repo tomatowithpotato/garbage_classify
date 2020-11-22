@@ -4,6 +4,17 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 
+# 标签平滑
+def smooth_labels(y, smooth_factor=0.1):
+    assert len(y.shape) == 2
+    if 0 <= smooth_factor <= 1:
+        # label smoothing ref: https://www.robots.ox.ac.uk/~vgg/rg/papers/reinception.pdf
+        y *= 1 - smooth_factor
+        y += smooth_factor / y.shape[1]
+    else:
+        raise Exception(
+            'Invalid label smoothing factor: ' + str(smooth_factor))
+    return y
 
 
 def process(image_path, label):
@@ -24,6 +35,9 @@ def get_dataset(numclasses, batch_size, dir, is_train=None):
         labels.append(label)
     
     labels = tf.keras.utils.to_categorical(labels, numclasses)
+    # 标签平滑
+    labels = smooth_labels(labels)
+    
     dataset = tf.data.Dataset.from_tensor_slices((image_paths, labels))
     dataset = dataset.map(process)
     if is_train is not None:
@@ -41,11 +55,14 @@ def get_Dataset(num_classes, batch_size):
 if __name__ == "__main__": 
     train_dataset = get_dataset(40, 64, 'info/train/train_data.txt')
     validation_dataset = get_dataset(40, 64, 'info/validation/validation_data.txt')
-    '''
+    
     print('Dataset.py')
+    with open('info/train/garbage_classify_rule.json', 'r', encoding='utf-8') as f:
+        label_dict = json.load(f)
     for image, label in validation_dataset:
-        print(label[0])
+        index = np.argmax(label[0])
+        print(label_dict[str(index)])
         plt.imshow(image[0])
         plt.show()
-    '''
+    
     

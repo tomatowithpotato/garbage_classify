@@ -84,6 +84,9 @@ class BaseSequence(tf.keras.utils.Sequence):
             # img = self.img_aug(img)
             img = augumentor(img)
         img = self.center_img(img, self.img_size[0])
+        #print(type(img))
+        #print(img.shape)
+        img = img.astype(np.float)
         return img
 
 

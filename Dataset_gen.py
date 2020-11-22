@@ -18,7 +18,7 @@ def smooth_labels(y, smooth_factor=0.1):
     return y
 
 
-def get_dataset_gen(num_classes, batch_size, dir, is_train=False):
+def get_dataset_gen(batch_size, num_classes, dir, is_train=False):
     image_paths = []
     labels = []
     with open(dir, 'r', encoding='utf-8') as f:
@@ -28,6 +28,8 @@ def get_dataset_gen(num_classes, batch_size, dir, is_train=False):
         labels.append(label)
     
     labels = tf.keras.utils.to_categorical(labels, num_classes)
+    # 标签平滑
+    labels = smooth_labels(labels)
 
     dataset = Data_generator.BaseSequence(image_paths, labels, batch_size, [224, 224], is_train)
 
@@ -40,11 +42,11 @@ def get_DatasetGenerator(batch_size, num_classes):
     return train_dataset, validation_dataset
 
 if __name__ == "__main__":
-    train_dataset, validation_dataset = get_DatasetGenerator(num_classes=40, batch_size=64)
+    train_dataset, validation_dataset = get_DatasetGenerator(num_classes=40, batch_size=32)
     
     with open('info/train/garbage_classify_rule.json', 'r', encoding='utf-8') as f:
         label_dict = json.load(f)
-    for image, label in validation_dataset:
+    for image, label in train_dataset:
         #print(label_dict[str(label[0])])
         print(label_dict[str(np.argmax(label[0]))])
         plt.imshow(image[0])
