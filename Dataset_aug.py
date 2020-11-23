@@ -37,6 +37,7 @@ def get_dataset_gen(batch_size, num_classes, dir, is_train=False):
     return dataset
 
 def get_DatasetGenerator(batch_size, num_classes):
+    print('Aug Dataset')
     train_dataset = get_dataset_gen(batch_size, num_classes, 'info/train/train_data.txt', True)
     validation_dataset = get_dataset_gen(batch_size, num_classes, 'info/validation/validation_data.txt')
     return train_dataset, validation_dataset
@@ -48,6 +49,7 @@ if __name__ == "__main__":
         label_dict = json.load(f)
     for image, label in train_dataset:
         #print(label_dict[str(label[0])])
+        #god = np.argmax(label, axis=1)
         print(label_dict[str(np.argmax(label[0]))])
         plt.imshow(image[0])
         plt.show()
