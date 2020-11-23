@@ -3,7 +3,7 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 import Dataset
-import Dataset_gen
+import Dataset_aug
 import Alexnet
 import Resnet
 
@@ -16,29 +16,7 @@ if __name__ == "__main__":
 
     model = Alexnet.Model(category)
 
-    db_train, db_val = Dataset_gen.get_DatasetGenerator(batch_size=batch_size, num_classes=category)
-
-    '''
-    optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
-
-    for epoch in range(epochs):
-        for batch_index, (X, y) in enumerate(db_train):
-            with tf.GradientTape() as tape:
-                y_pred = model(X)
-
-                y_index = np.argmax(y, axis=1)
-                y_pred_index = np.argmax(y_pred, axis=1)
-                pred_max_present = np.argmax(np.bincount(y_pred_index))
-                oh = np.argwhere(y_index == pred_max_present).size
-                print(oh)
-
-                loss = tf.keras.losses.sparse_categorical_crossentropy(y_true=y, y_pred=y_pred)
-                loss = tf.reduce_mean(loss)
-                print("batch %d: loss %f" % (batch_index, loss.numpy()))
-                bb = 22
-            grads = tape.gradient(loss, model.variables)
-            optimizer.apply_gradients(grads_and_vars=zip(grads, model.variables))
-    '''
+    db_train, db_val = Dataset_aug.get_DatasetGenerator(batch_size=batch_size, num_classes=category)
 
     
     # 装配     
