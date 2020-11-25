@@ -3,6 +3,8 @@ import json
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
+import config
+from PIL import Image
 
 # 标签平滑
 def smooth_labels(y, smooth_factor=0.1):
@@ -17,17 +19,27 @@ def smooth_labels(y, smooth_factor=0.1):
     return y
 
 
-def process(image_path, label):
-    image = tf.io.read_file(image_path)
-    image = tf.image.decode_jpeg(image,channels=3)
-    image = tf.image.resize(image,[224,224])
-    image = tf.cast(image,tf.float32)
-    image = image/255
-    return image, label
+def process(img_path, label):
+    new_shape = config.img_shape()
+    means, stds = config.mean_std()
+
+    img = tf.io.read_file(img_path)
+    img = tf.image.decode_jpeg(img, channels=3)
+    img = tf.image.resize_with_pad(img, new_shape[0], new_shape[1])
+    img = tf.cast(img, tf.float32) / 255.0
+
+    tmp = [0, 0, 0]
+    for i in range(3):
+        tmp[i] = img[...,i] - means[i]
+        tmp[i] = tmp[i] / stds[i]
+    img = tf.stack(tmp, 2)
+
+    return img, label
 
 def get_dataset(numclasses, batch_size, dir, is_train=None):
     image_paths = []
     labels = []
+
     with open(dir, 'r', encoding='utf-8') as f:
         image_label = json.load(f)
     for image_path, label in image_label.items():

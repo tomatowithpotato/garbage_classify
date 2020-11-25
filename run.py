@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import Dataset
 import Dataset_aug
 from model import Alexnet, Resnet
+import logging
 
 if __name__ == "__main__": 
     epochs = 100 # 训练 epochs 
