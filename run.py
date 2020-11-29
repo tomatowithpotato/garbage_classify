@@ -3,7 +3,7 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 import Dataset
-import Dataset_aug
+import Dataset_wusaifei
 from model import Alexnet, Resnet
 import logging
 
@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     model = Alexnet.Model(num_classes)
 
-    #db_train, db_val = Dataset_aug.get_DatasetGenerator(batch_size=batch_size, num_classes=num_classes)
+    #db_train, db_val = Dataset_wusaifei.get_DatasetGenerator(batch_size=batch_size, num_classes=num_classes)
     db_train, db_val = Dataset.get_Dataset(batch_size=batch_size, num_classes=num_classes)
 
     '''
