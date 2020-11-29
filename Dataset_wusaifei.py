@@ -37,7 +37,7 @@ def get_dataset_gen(batch_size, num_classes, dir, is_train=False):
     return dataset
 
 def get_DatasetGenerator(batch_size, num_classes):
-    print('Aug Dataset')
+    print('wusaifei Dataset')
     train_dataset = get_dataset_gen(batch_size, num_classes, 'info/train/train_data.txt', True)
     validation_dataset = get_dataset_gen(batch_size, num_classes, 'info/validation/validation_data.txt')
     return train_dataset, validation_dataset
