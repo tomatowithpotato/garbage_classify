@@ -3,8 +3,8 @@ import json
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
+import aug
 import config
-from PIL import Image
 
 # 标签平滑
 def smooth_labels(y, smooth_factor=0.1):
@@ -34,7 +34,18 @@ def process(img_path, label):
         tmp[i] = tmp[i] / stds[i]
     img = tf.stack(tmp, 2)
 
+    #img = tf.numpy_function(aug.augumentor, [img], img.dtype)
+
     return img, label
+
+
+def train_process(img_path, label):
+    img, label = process(img_path, label)
+    img_shape = tf.shape(img)
+    img = tf.numpy_function(aug.augumentor, [img], img.dtype)
+    img = tf.reshape(img, img_shape)
+    return img, label
+
 
 def get_dataset(numclasses, batch_size, dir, is_train=None):
     image_paths = []
@@ -51,13 +62,20 @@ def get_dataset(numclasses, batch_size, dir, is_train=None):
     labels = smooth_labels(labels)
     
     dataset = tf.data.Dataset.from_tensor_slices((image_paths, labels))
-    dataset = dataset.map(process)
+    
     if is_train is not None:
-        dataset = dataset.shuffle(4000)
+        #训练
+        dataset = dataset.map(train_process)
+        dataset = dataset.shuffle(2000)
+    else:
+        #测试
+        dataset = dataset.map(process)
+
     dataset = dataset.batch(batch_size)
 
     print(dir + ' dataset OK')
     return dataset
+
 
 def get_Dataset(num_classes, batch_size):
     print('Raw Dataset')
@@ -65,9 +83,9 @@ def get_Dataset(num_classes, batch_size):
     validation_dataset = get_dataset(num_classes, batch_size, 'info/validation/validation_data.txt')
     return train_dataset, validation_dataset
 
+
 if __name__ == "__main__": 
-    train_dataset = get_dataset(40, 64, 'info/train/train_data.txt')
-    validation_dataset = get_dataset(40, 64, 'info/validation/validation_data.txt')
+    train_dataset, validation_dataset = get_Dataset(batch_size=32, num_classes=40)
     
     print('Dataset.py')
     with open('info/train/garbage_classify_rule.json', 'r', encoding='utf-8') as f:
@@ -75,6 +93,7 @@ if __name__ == "__main__":
     for image, label in validation_dataset:
         index = np.argmax(label[0])
         print(label_dict[str(index)])
+        #a=image[0].numpy()
         plt.imshow(image[0])
         plt.show()
     
