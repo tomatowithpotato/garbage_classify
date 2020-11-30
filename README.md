@@ -1,1 +1,3 @@
 # garbage_classify
+Dataset.py是我自己写的数据读取文件
+Data_generator.py和Dataset_wusaifei.py都是我借鉴，原作者wusaifei
